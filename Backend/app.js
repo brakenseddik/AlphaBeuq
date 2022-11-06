@@ -22,12 +22,14 @@ app.use(cookieParser());
 const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user')
 const categoryRouter = require('./routes/category')
+const productRouter = require('./routes/product')
 
 //=====================================ROUTES======================================//
 
 app.use('/api/auth', authRouter)
 app.use('/api/users', userRouter)
 app.use('/api/categories', categoryRouter)
+app.use('/api/products', productRouter)
 
 //==============================DATABASE CONNECTION===============================//
 
