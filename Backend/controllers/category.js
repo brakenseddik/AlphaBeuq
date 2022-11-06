@@ -23,7 +23,7 @@ exports.getCategories = (req, res) => {
 exports.categoryById = (req, res, next, id) => {
     Category.findById(id).exec((error, category) => {
         if (!category || error) {
-            res.status(400).json({success: false, error: 'Category not found'});
+            res.status(400).json({success: false, error: 'Category not found !!'});
         }
         req.category = category;
         next();
