@@ -1,6 +1,5 @@
 const {Category} = require('../models/category');
 const {errorHandler} = require('../helpers/db_error_handler');
-const {Product} = require("../models/product");
 exports.createCategory = (req, res) => {
     let category = new Category(req.body);
     category.save((error, data) => {
@@ -8,6 +7,30 @@ exports.createCategory = (req, res) => {
             return res.status(400).send({success: false, error: errorHandler(error)});
         }
         res.status(200).send(data);
+    })
+}
+exports.deleteCategory = (req, res) => {
+    let category = req.category;
+    category.delete((error, data) => {
+        if (error) {
+            return res.status(400).send({success: false, error: errorHandler(error)});
+        }
+        res.status(200).send({success: true, message: 'Category deleted successfully'});
+
+    })
+}
+exports.updateCategory = (req, res) => {
+    let category = req.category;
+    category.name = req.body.name;
+    category.description = req.body.description;
+    category.image = req.body.image;
+
+    category.save((error, data) => {
+        if (error) {
+            return res.status(400).send({success: false, error: errorHandler(error)});
+        }
+        res.status(200).send(data);
+
     })
 }
 
