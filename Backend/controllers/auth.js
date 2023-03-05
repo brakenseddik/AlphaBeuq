@@ -49,7 +49,6 @@ exports.signout = (req, res) => {
         res.send({success: true, message: 'Sign out success'});
     } catch (e) {
         res.status(500).send({success: false, error: e});
-
     }
 
 }
