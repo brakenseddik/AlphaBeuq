@@ -8,9 +8,9 @@ exports.signup = (req, res) => {
     const user = new User(req.body);
 
     user.save((error, user) => {
-        console.log(error);
-        console.log(errorHandler(error));
+      
         if (error) return res.json({
+                success: false,
                 error: errorHandler(error)
             }
         );
