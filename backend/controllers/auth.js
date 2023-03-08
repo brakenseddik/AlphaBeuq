@@ -1,16 +1,17 @@
-const {User: Auth} = require("../models/user")
-const {errorHandler} = require("../helpers/db_error_handler")
+const {User} = require("../models/user")
 const jwt = require('jsonwebtoken');
 const {expressjwt: expressjwt} = require('express-jwt');
+const {errorHandler} = require("../helpers/db_error_handler");
 
 
 exports.signup = (req, res) => {
-    const user = new Auth(req.body);
+    const user = new User(req.body);
 
     user.save((error, user) => {
+        console.log(error);
+        console.log(errorHandler(error));
         if (error) return res.json({
-                success: false,
-                error: errorHandler(error),
+                error: errorHandler(error)
             }
         );
         user.salt = undefined;
