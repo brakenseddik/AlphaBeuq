@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Layout from "../core/Layout";
 import {signIn} from "../auth";
+import {Redirect} from "react-router-dom";
 
 const SignIn = () => {
     const [values, setValues] = useState({
@@ -36,7 +37,8 @@ const SignIn = () => {
                         email: '',
                         password: '',
                         error: '',
-                        loading: false
+                        loading: false,
+                        redirectToReference: true
                     });
                 }
             });
@@ -74,7 +76,6 @@ const SignIn = () => {
             </form>
         );
     }
-
     const showError = () => {
         return (
             <div
@@ -85,14 +86,16 @@ const SignIn = () => {
         );
     }
 
-    const showSuccess = () => {
-        return (
-            <div
-                className='alert alert-success'
-                style={{display: success ? '' : 'none'}}>
-                Logged in successfully.
-            </div>
-        );
+
+    const showLoading = () => {
+        return loading && (<div className='alert alert-info'>
+            <h2>Loading...</h2>
+        </div>)
+    }
+    const redirectUser = () => {
+        if (redirectToReference) {
+            return <Redirect to="/"/>
+        }
     }
 
     return (
@@ -100,10 +103,11 @@ const SignIn = () => {
             title='Signup'
             description='Signup to Node React E-commerce App'
             className='container col-md-8 offset-mde-2'>
-            {showSuccess()}
+            {showLoading()}
             {showError()}
             {signInForm()}
+            {redirectUser()}
         </Layout>
     );
 }
-export default SignUp;
+export default SignIn;

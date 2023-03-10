@@ -8,7 +8,7 @@ exports.signup = (req, res) => {
     const user = new User(req.body);
 
     user.save((error, user) => {
-      
+
         if (error) return res.json({
                 success: false,
                 error: errorHandler(error)
@@ -23,7 +23,7 @@ exports.signup = (req, res) => {
 
 exports.signin = (req, res) => {
     const {email, password} = req.body;
-    Auth.findOne({email}, (err, user) => {
+    User.findOne({email}, (err, user) => {
         if (err || !user) {
             return res.status(400).json({success: false, error: err});
         }
