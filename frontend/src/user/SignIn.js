@@ -1,18 +1,20 @@
 import React, {useState} from "react";
 import Layout from "../core/Layout";
-import {signIn} from "../auth";
+import {authenticate, isAuthenticated, signIn} from "../auth";
 import {Redirect} from "react-router-dom";
 
 const SignIn = () => {
     const [values, setValues] = useState({
-        email: '',
-        password: '',
+        email: 'dzmidou95@gmail.com',
+        password: 'Msdos@1998..',
         error: '',
         loading: false,
         redirectToReference: false
     });
 
     const {email, password, error, loading, redirectToReference} = values;
+    const {user} = isAuthenticated();
+
 
     const handleChange = name => event => {
         setValues({...values, error: false, [name]: event.target.value})
@@ -32,14 +34,14 @@ const SignIn = () => {
                         loading: false
                     });
                 } else {
-                    setValues({
-                        ...values,
-                        email: '',
-                        password: '',
-                        error: '',
-                        loading: false,
-                        redirectToReference: true
-                    });
+                    authenticate(data, () => {
+                        setValues({
+                                ...values,
+                                loading: false,
+                                redirectToReference: true
+                            }
+                        );
+                    })
                 }
             });
     }
@@ -94,7 +96,12 @@ const SignIn = () => {
     }
     const redirectUser = () => {
         if (redirectToReference) {
-            return <Redirect to="/"/>
+            if (user && user.role === 1) {
+                return <Redirect to="/admin/dashboard"/>
+
+            } else {
+                return <Redirect to="/user/dashboard"/>
+            }
         }
     }
 
