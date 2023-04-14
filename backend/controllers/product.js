@@ -10,17 +10,22 @@ exports.createProduct = (req, res) => {
     form.keepExtensions = true;
     form.parse(req, (error, fields, files) => {
         if (error) {
-            res.status(400).json({success: false, error: 'Cannot upload file'});
+            res.status(400).json({success: false, error: error ?? 'Cannot upload file'});
         }
         let product = new Product(fields);
+        let {name, description, price, category, quantity, shipping} = fields;
         if (files.image) {
             product.image.data = fs.readFileSync(files.image.filepath);
             product.image.contentType = files.image.mimetype;
         }
-
+        if (!name || !description || !price || !category || !quantity || !shipping) {
+            return res.status(400).json({
+                success: false, error: 'All fields are required'
+            });
+        }
         product.save((error, data) => {
             if (error) {
-                res.status(400).json({success: false, error: errorHandler(error)});
+                res.status(400).send({success: false, error: error});
             }
             res.status(200).send(data);
         })

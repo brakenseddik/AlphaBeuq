@@ -4,7 +4,8 @@ const categorySchema = new mongoose.Schema({
         type: String,
         required: true,
         maxLength: 32,
-        trim: true
+        trim: true,
+        unique: true
     },
     'description': {
         type: String,
@@ -13,7 +14,7 @@ const categorySchema = new mongoose.Schema({
     },
     'image': {
         type: String,
-        required: true,
+        // required: true,
     },
 }, {timestamps: true})
 

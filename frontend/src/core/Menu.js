@@ -60,7 +60,6 @@ const AppMenu = ({history}) => {
                     </li>
                 )}
                 {isAuthenticated() && (
-
                     <li>
                         <span
                             className='nav-link'
